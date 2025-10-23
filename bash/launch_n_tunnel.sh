@@ -16,7 +16,9 @@ PASSWORD_KEY_FILE=$6
 USES_PASS=$7
 PYTHON_EXEC=$8
 PYTHON_SCRIPT_PATH=$9
-PYTHON_SCRIPT_ARGS=${10}
+
+shift 9
+PYTHON_SCRIPT_ARGS="$*"
 
 # Function to check execution status and send result to Lua
 check_and_send_result() {
@@ -26,7 +28,6 @@ check_and_send_result() {
         echo "Error: $1"
     fi
 }
-
 
 if [ "$USES_PASS" == "true" ]; then
   SSH_COMMAND="sshpass -p $PASSWORD_KEY_FILE ssh -o StrictHostKeyChecking=no -f -l $USERNAME -p $PORT $HOST" 
