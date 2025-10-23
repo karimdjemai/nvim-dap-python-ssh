@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Check if all required arguments are provided
-if [ "$#" -ne 10 ]; then
-    echo "Error; Usage: $0 <username> <host> <port> <debug_host> <debug_port> <password_key_file> <uses_pass> <python_executable> <python_script_path> <python_script_args> ${10}"
+if [ "$#" -lt 9 ]; then
+    echo "Error; Usage: $0 <username> <host> <port> <debug_host> <debug_port> <password_key_file> <uses_pass> <python_executable> <python_script_path> <python_script_args>"
     exit 1
 fi
 
