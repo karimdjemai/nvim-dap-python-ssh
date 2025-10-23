@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Check if all required arguments are provided
-if [ "$#" -ne 9 ]; then
-    echo "Error; Usage: $0 <username> <host> <port> <debug_host> <debug_port> <password_key_file> <uses_pass> <python_executable> <python_script_path>"
+if [ "$#" -ne 10 ]; then
+    echo "Error; Usage: $0 <username> <host> <port> <debug_host> <debug_port> <password_key_file> <uses_pass> <python_executable> <python_script_path> <python_script_args> ${10}"
     exit 1
 fi
 
@@ -16,6 +16,8 @@ PASSWORD_KEY_FILE=$6
 USES_PASS=$7
 PYTHON_EXEC=$8
 PYTHON_SCRIPT_PATH=$9
+PYTHON_SCRIPT_ARGS=${10}
+
 # Function to check execution status and send result to Lua
 check_and_send_result() {
     if [ "$?" -eq 0 ]; then
@@ -33,7 +35,7 @@ else
 fi
 
 # Execute Python file via sshpass
-eval "$SSH_COMMAND $PYTHON_EXEC -Xfrozen_modules=off -m debugpy --listen localhost:5678 --wait-for-client $PYTHON_SCRIPT_PATH"
+eval "$SSH_COMMAND $PYTHON_EXEC -Xfrozen_modules=off -m debugpy --listen localhost:5678 --wait-for-client $PYTHON_SCRIPT_PATH $PYTHON_SCRIPT_ARGS"
 check_and_send_result "Failed to execute Python script via sshpass"
 
 # Wait until the debugger is ready

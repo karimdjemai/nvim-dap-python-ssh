@@ -163,7 +163,12 @@ end
         use_pass = "true"
        end
 
-       local ssh_creation_command = string.format("bash %s %s %s %d %s %d %s %s %s %s",
+      local py_args = ""
+      if config.args then
+        py_args = table.concat(config.args, " ")
+      end
+
+       local ssh_creation_command = string.format("bash %s %s %s %d %s %d %s %s %s %s %s",
         bashScriptDirectory .. "launch_n_tunnel.sh",
         config.username,
         config.host,
@@ -173,7 +178,9 @@ end
         ssh_key_pass,
         use_pass,
         config.pythonPath,
-        config.pathMappings[1].remoteRoot .. "/" .. config.program)
+        config.pathMappings[1].remoteRoot .. "/" .. config.program,
+        py_args
+      )
 
        local result = vim.fn.systemlist(ssh_creation_command)
        local error_flag = checkForError(result)
